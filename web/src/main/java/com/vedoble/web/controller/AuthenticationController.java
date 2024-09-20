@@ -5,7 +5,7 @@ import com.vedoble.web.Dto.AuthenticationDTO;
 import com.vedoble.web.Dto.LoginResponseDto;
 import com.vedoble.web.Dto.RegisterDTO;
 import com.vedoble.web.configurations.TokenService;
-import com.vedoble.web.entity.User;
+import com.vedoble.web.entity.Usua;
 import com.vedoble.web.repository.UsuaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody @Validated AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.usualogin(),data.usuasenha());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var token = tokenService.generateToken((Usua) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
@@ -40,9 +40,9 @@ public class AuthenticationController {
     public ResponseEntity register(@RequestBody @Validated RegisterDTO data){
     if(this.usuaRepository.findByUsualogin(data.usualogin()) != null) return ResponseEntity.badRequest().build();
     String encryptedSenha = new BCryptPasswordEncoder().encode(data.usuasenha());
-    User newUser = new User(data.usualogin(), encryptedSenha, data.perfil());
+    Usua newUsua = new Usua(data.usualogin(), encryptedSenha, data.perfil());
 
-    this.usuaRepository.save(newUser);
+    this.usuaRepository.save(newUsua);
     return ResponseEntity.ok().build();
     }
 }

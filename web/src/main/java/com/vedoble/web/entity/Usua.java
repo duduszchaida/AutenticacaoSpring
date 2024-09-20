@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User implements UserDetails {
+public class Usua implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String usuasenha;
     private UsuaPerfil perfil;
 
-    public User(String usualogin, String usuasenha, UsuaPerfil perfil){
+    public Usua(String usualogin, String usuasenha, UsuaPerfil perfil){
         this.usualogin = usualogin;
         this.usuasenha = usuasenha;
         this.perfil = perfil;
