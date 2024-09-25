@@ -8,6 +8,8 @@ import com.vedoble.web.configurations.TokenService;
 import com.vedoble.web.entity.Usua;
 import com.vedoble.web.repository.UsuaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,12 +31,13 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated AuthenticationDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.usualogin(),data.usuasenha());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((Usua) auth.getPrincipal());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.usualogin(), data.usuasenha());
 
-        return ResponseEntity.ok(new LoginResponseDto(token));
+            var auth = this.authenticationManager.authenticate(usernamePassword);
+            var token = tokenService.generateToken((Usua) auth.getPrincipal());
+            return ResponseEntity.ok(new LoginResponseDto(token));
     }
+
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Validated RegisterDTO data){

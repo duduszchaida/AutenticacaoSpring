@@ -40,12 +40,12 @@ public class Usua implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.usuasenha;
     }
 
     @Override
     public String getUsername() {
-        return usualogin;
+        return this.usualogin;
     }
 
     @Override
